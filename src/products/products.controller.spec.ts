@@ -23,6 +23,44 @@ describe('ProductsController', () => {
         ...dto,
       };
     }),
+
+    // Mock the findAll method of the ProductsService
+    findAll: jest.fn(() => {
+      return [
+        {
+          id: 1,
+          name: 'Product1',
+          description: 'Description1',
+          price: 19.99,
+        },
+        {
+          id: 2,
+          name: 'Product2',
+          description: 'Description2',
+          price: 29.99,
+        },
+      ];
+    }),
+
+   // Mock the findOne method of the ProductsService
+    findOne: jest.fn((id) => {
+      return {
+        id,
+        name: 'Product' + id,
+        description: 'Description' + id,
+        price: 19.99 + id,
+      };
+    }),
+
+    remove :jest.fn((id) => {
+      // Assume your remove method returns some information about the removed product
+      return {
+        message: `Product with id ${id} removed successfully`,
+      };
+
+    })
+    
+
   };
 
   // Setup function that runs before each test case
@@ -84,4 +122,44 @@ it('should update a product', () => {
     price: 19.99,
   });
 });
+
+// Test case: Check the findAll method of ProductsController
+it('should get all products', () => {
+  expect(controller.findAll()).toEqual([
+    {
+      id: 1,
+      name: 'Product1',
+      description: 'Description1',
+      price: 19.99,
+    },
+    {
+      id: 2,
+      name: 'Product2',
+      description: 'Description2',
+      price: 29.99,
+    },
+  ]);
+});
+
+
+// Test case: Check the findOne method of ProductsController
+it('should get one product by id', () => {
+  expect(controller.findOne('1')).toEqual({
+    id: 1,
+    name: 'Product1',
+    description: 'Description1',
+    price: expect.any(Number), // Allow any number for the price
+  });
+});
+
+
+// Test case: Check the remove method of ProductsController
+it('should remove a product by id', () => {
+  const productId = '1';
+
+  expect(controller.remove(productId)).toEqual({
+    message: `Product with id ${productId} removed successfully`,
+  });
+});
+
 });
