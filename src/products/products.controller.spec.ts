@@ -15,6 +15,14 @@ describe('ProductsController', () => {
         ...dto,
       };
     }),
+
+    // Mock the update method of the ProductsService
+    update: jest.fn((id, dto) => {
+      return {
+        id,
+        ...dto,
+      };
+    }),
   };
 
   // Setup function that runs before each test case
@@ -58,4 +66,22 @@ describe('ProductsController', () => {
       price: 9.99,
     });
   });
+
+
+  // Test case: Check the update method of ProductsController
+it('should update a product', () => {
+  // Expected product structure after update
+  expect(
+    controller.update('1', {
+      name: 'updatedName',
+      description: 'updatedDescription',
+      price: expect.any(Number),
+    }),
+  ).toEqual({
+    id:1,
+    name: 'updatedName',
+    description: 'updatedDescription',
+    price: 19.99,
+  });
+});
 });
