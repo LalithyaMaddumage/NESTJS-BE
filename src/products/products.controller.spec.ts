@@ -23,6 +23,26 @@ describe('ProductsController', () => {
         ...dto,
       };
     }),
+
+    // Mock the findAll method of the ProductsService
+    findAll: jest.fn(() => {
+      return [
+        {
+          id: 1,
+          name: 'Product1',
+          description: 'Description1',
+          price: 19.99,
+        },
+        {
+          id: 2,
+          name: 'Product2',
+          description: 'Description2',
+          price: 29.99,
+        },
+      ];
+    }),
+
+
   };
 
   // Setup function that runs before each test case
@@ -84,4 +104,26 @@ it('should update a product', () => {
     price: 19.99,
   });
 });
+
+// Test case: Check the findAll method of ProductsController
+it('should get all products', () => {
+  expect(controller.findAll()).toEqual([
+    {
+      id: 1,
+      name: 'Product1',
+      description: 'Description1',
+      price: 19.99,
+    },
+    {
+      id: 2,
+      name: 'Product2',
+      description: 'Description2',
+      price: 29.99,
+    },
+  ]);
+});
+
+
+
+
 });
