@@ -52,6 +52,13 @@ describe('ProductsController', () => {
       };
     }),
 
+    remove :jest.fn((id) => {
+      // Assume your remove method returns some information about the removed product
+      return {
+        message: `Product with id ${id} removed successfully`,
+      };
+
+    })
     
 
   };
@@ -145,5 +152,14 @@ it('should get one product by id', () => {
   });
 });
 
+
+// Test case: Check the remove method of ProductsController
+it('should remove a product by id', () => {
+  const productId = '1';
+
+  expect(controller.remove(productId)).toEqual({
+    message: `Product with id ${productId} removed successfully`,
+  });
+});
 
 });
