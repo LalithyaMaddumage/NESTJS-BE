@@ -42,6 +42,17 @@ describe('ProductsController', () => {
       ];
     }),
 
+   // Mock the findOne method of the ProductsService
+    findOne: jest.fn((id) => {
+      return {
+        id,
+        name: 'Product' + id,
+        description: 'Description' + id,
+        price: 19.99 + id,
+      };
+    }),
+
+    
 
   };
 
@@ -124,6 +135,15 @@ it('should get all products', () => {
 });
 
 
+// Test case: Check the findOne method of ProductsController
+it('should get one product by id', () => {
+  expect(controller.findOne('1')).toEqual({
+    id: 1,
+    name: 'Product1',
+    description: 'Description1',
+    price: expect.any(Number), // Allow any number for the price
+  });
+});
 
 
 });
